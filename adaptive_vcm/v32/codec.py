@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from fractions import Fraction
+from functools import lru_cache
 import hashlib
 from pathlib import Path
 import re
@@ -15,6 +16,16 @@ import numpy as np
 from ..codec import StandardCodec
 from .roi import inverse_retarget
 from .transport import pack_packet, unpack_packet
+
+
+@lru_cache(maxsize=None)
+def _fps_sync_flags(ffmpeg_bin: str) -> list[str]:
+    """Probe once per executable; legacy FFmpeg alone needs the global option."""
+    result = subprocess.run([ffmpeg_bin, '-hide_banner', '-h', 'full'],
+                            capture_output=True, text=True, check=True, timeout=15)
+    if re.search(r'(?m)^\s*-fps_mode(?:\s|\[|$)', result.stdout + result.stderr):
+        return ['-fps_mode', 'passthrough']
+    return ['-vsync', '0']
 
 
 @dataclass(frozen=True)
@@ -71,7 +82,7 @@ class V32Codec:
             command = [self.standard.ffmpeg, '-nostdin', '-nostats', '-y', '-v', 'info', '-xerror',
                 '-max_alloc', str(max(16 * 1024 * 1024, h * w * 16)),
                 '-err_detect', 'explode', '-threads', '2', '-max_pixels', str(allocation_pixels),
-                '-f', fmt, '-i', 'pipe:0', '-vsync', '0', '-vf', 'showinfo',
+                '-f', fmt, '-i', 'pipe:0', *_fps_sync_flags(self.standard.ffmpeg), '-vf', 'showinfo',
                 '-frames:v', str(t + 1), '-fs', str(expected + h * w * 3),
                 '-f', 'rawvideo', '-pix_fmt', 'rgb24', str(path)]
             result = subprocess.run(command, input=packet.stream, stdout=subprocess.DEVNULL,

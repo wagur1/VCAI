@@ -12,15 +12,18 @@ def save_checkpoint(path,model,metadata):
     # JSON roundtrip rejects non-native metadata (TorchVersion/NumPy scalars).
     meta=json.loads(json.dumps(metadata,allow_nan=False))
     state={k:v.detach().cpu().clone() for k,v in model.state_dict().items()}
-    torch.save(dict(schema=SCHEMA,actions=model.actions,conditions=model.conditions,metadata=meta,metadata_sha256=digest(meta),
-                    state_sha256=state_hash(state),state=state),path)
+    value=dict(schema=SCHEMA,actions=model.actions,conditions=model.conditions,metadata=meta,metadata_sha256=digest(meta),
+               state_sha256=state_hash(state),state=state)
+    if getattr(model,'task_logits',False): value['task_logits']=True
+    torch.save(value,path)
 
 def load_checkpoint(path,device='cpu'):
     value=torch.load(path,map_location='cpu',weights_only=True)
     if value.get('schema')!=SCHEMA or digest(value['metadata'])!=value['metadata_sha256']:
         raise ValueError('checkpoint metadata mismatch')
     if state_hash(value['state'])!=value['state_sha256']: raise ValueError('checkpoint state mismatch')
-    model=Controller(value['actions'],value.get('conditions',6)); model.load_state_dict(value['state'],strict=True)
+    model=Controller(value['actions'],value.get('conditions',6),task_logits=value.get('task_logits',False))
+    model.load_state_dict(value['state'],strict=True)
     model.to(device).eval(); model.metadata=value['metadata']
     model.checkpoint_sha256=hashlib.sha256(Path(path).read_bytes()).hexdigest()
     return model

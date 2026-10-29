@@ -11,7 +11,7 @@ from . import SCHEMA
 from .protocol import ACTIONS,settings,digest,codec_factory
 from .preprocessing import region_maps,filter_clip
 from .model import Controller
-from .learning import train_controller,calibrate,select_action
+from .learning import train_controller,calibrate,select_action,relative_damage
 from .checkpoint import save_checkpoint,load_checkpoint
 
 def write_json(path,value):
@@ -60,24 +60,36 @@ def infer(model,pair,c):
     result=model(pair[0][None].to(device),pair[1][None].to(device),torch.tensor([c],device=device))
     return {k:v[0].cpu().numpy() for k,v in result.items()}
 
+def _normalize_row(r,cfg):
+    if not cfg.get('domain_primary_mask'): return r
+    dom=r.get('domain')
+    if dom not in ('ar','od','ot'): return r
+    mask=[dom=='ar',dom=='od',dom=='ot']
+    return dict(r,mask=mask,condition=condition(r['codec'],r['qp'],mask,cfg,domain=dom))
+
 def train_models(cache,inputs,cfg,out,device,task_models):
-    validate_cache(cache); fit=[r for r in cache['rows'] if r['split']=='train']; cal=[r for r in cache['rows'] if r['split']=='cal']; models=[]
+    validate_cache(cache)
+    rows=[_normalize_row(r,cfg) for r in cache['rows']]
+    fit=[r for r in rows if r['split']=='train']; cal=[r for r in rows if r['split']=='cal']; models=[]
+    if cfg.get('damage_units')=='relative':
+        fit=relative_damage(fit,cfg.get('damage_floor')); cal=relative_damage(cal,cfg.get('damage_floor'))
     from .learning import targets
-    choices=[targets(r['rate'],np.array(r['damage'],float),r['mask'],cfg['damage_tolerance'],cfg['budget_ratio']) for r in fit]
+    choices=[targets(r['rate'],np.array(r['damage'],float),r['mask'],cfg['damage_tolerance'],cfg['budget_ratio'],cfg.get('oracle_damage_weight')) for r in fit]
     write_json(out/'train_oracle.json',dict(scope='TRAIN constrained measured oracle; never deployed TEST GT selection',
         count=len(choices),action_counts={str(a):choices.count(a) for a in range(len(ACTIONS))},
         records=[dict(id=r['id'],codec=r.get('codec'),qp=r.get('qp'),action=a) for r,a in zip(fit,choices)]))
     for seed in cfg['seeds']:
         torch.manual_seed(seed); np.random.seed(seed)
-        model=Controller(len(ACTIONS),conditions=9 if cfg.get('domain_condition') else 6); history=train_controller(model,fit,inputs,cfg,device)
+        model=Controller(len(ACTIONS),conditions=9 if cfg.get('domain_condition') else 6,task_logits=cfg.get('task_logits',False))
+        history=train_controller(model,fit,inputs,cfg,device)
         pred=[infer(model,inputs[r['id']],r['condition']) for r in cal]
         actual=np.array([r['damage'] for r in cal],float)
         if cfg.get('domain_condition'):
             from .learning import calibrate_domains
-            calibration=calibrate_domains(cal,pred,cfg['cal_coverage'])
+            calibration=calibrate_domains(cal,pred,cfg['cal_coverage'],mode=cfg.get('calibration_mode','quantile'))
         else:
             calibration=calibrate(np.array([p['risk'] for p in pred]),actual,np.array([p['rate'] for p in pred]),
-                np.array([r['rate'] for r in cal]),np.array([r['mask'] for r in cal],bool),cfg['cal_coverage'])
+                np.array([r['rate'] for r in cal]),np.array([r['mask'] for r in cal],bool),cfg['cal_coverage'],mode=cfg.get('calibration_mode','quantile'))
         meta=dict(seed=seed,settings=cfg,actions=[list(a) for a in ACTIONS],experiment=cache['experiment'],
             source_commit=cache['origin']['origin_commit'],source_archive_sha256=cache['origin']['bundle_sha256'],
             cache_sha256=cache['sha256'],sources=cache['sources'],task_models=task_models,calibration=calibration,
@@ -92,7 +104,8 @@ def run(args):
     from .evaluation import evaluate
     cfg=settings(getattr(args,'config',None)); out=Path(args.out)
     if cfg.get('revision')=='arot-r1' and args.experiment!='ar_ot': raise ValueError('AR+OT repair recipe only')
-    if out.exists() and any(out.iterdir()): raise ValueError('immutable empty output required')
+    if out.exists() and any(p.name not in ('measurements.json','controller_inputs.pth') for p in out.iterdir()):
+        raise ValueError('immutable empty output required')
     out.mkdir(parents=True,exist_ok=True); device='cuda' if torch.cuda.is_available() else 'cpu'
     torch.set_num_threads(2)
     origin=json.loads(Path(args.origin).read_text()); write_json(out/'origin.json',origin)
@@ -110,23 +123,30 @@ def run(args):
             if r.id in sources or sha in hashes: raise ValueError('duplicate pixels/ID across cohorts')
             sources[r.id]=dict(split=split,pixel_sha256=sha,frame_recipe=r.frame_recipe); hashes.add(sha)
     write_json(out/'cohorts.json',sources)
-    cache=dict(schema=SCHEMA,experiment=args.experiment,origin=origin,settings=cfg,actions=[list(a) for a in ACTIONS],
-        sources={k:v for k,v in sources.items() if v['split'] in ('train','cal')},task_models=task_models,rows=[])
-    inputs={}
-    for split in ('train','cal'):
-        for index,r in enumerate(groups[split]):
-            heads.source(r); maps=region_maps(r.rgb,r.source_predictions['od']); inputs[r.id]=input_pair(r.rgb,maps)
-            for codec in cfg['codecs']:
-                for qp in cfg['qps']:
-                    c=codec_factory(r.task,codec,qp,cfg)
-                    table=measure_candidates(r.rgb,maps,ACTIONS,c,r.task,lambda rgb:heads.costs(rgb,r))
-                    cache['rows'].append(dict(id=r.id,split=split,domain=r.task,codec=codec,qp=qp,mask=r.mask,
-                        provenance=r.provenance,condition=condition(codec,qp,r.mask,cfg,domain=r.task),**table))
-            write_json(out/'measurements.partial.json',cache)
-            print(f'V34 {args.experiment} cache {split} {index+1}/{len(groups[split])}',flush=True)
-    cache['sha256']=digest(cache); write_json(out/'measurements.json',cache)
-    # Inputs are a separate immutable tensor archive; only native tensors.
-    torch.save(inputs,out/'controller_inputs.pth')
+    meas_path=out/'measurements.json'; inputs_path=out/'controller_inputs.pth'
+    if meas_path.is_file() and inputs_path.is_file():
+        print(f'Reusing seeded measurements.json and controller_inputs.pth from {out}',flush=True)
+        cache=json.loads(meas_path.read_text(encoding='utf-8'))
+        validate_cache(cache)
+        inputs=torch.load(inputs_path,map_location='cpu',weights_only=True)
+    else:
+        cache=dict(schema=SCHEMA,experiment=args.experiment,origin=origin,settings=cfg,actions=[list(a) for a in ACTIONS],
+            sources={k:v for k,v in sources.items() if v['split'] in ('train','cal')},task_models=task_models,rows=[])
+        inputs={}
+        for split in ('train','cal'):
+            for index,r in enumerate(groups[split]):
+                heads.source(r); maps=region_maps(r.rgb,r.source_predictions['od']); inputs[r.id]=input_pair(r.rgb,maps)
+                for codec in cfg['codecs']:
+                    for qp in cfg['qps']:
+                        c=codec_factory(r.task,codec,qp,cfg)
+                        table=measure_candidates(r.rgb,maps,ACTIONS,c,r.task,lambda rgb:heads.costs(rgb,r))
+                        cache['rows'].append(dict(id=r.id,split=split,domain=r.task,codec=codec,qp=qp,mask=r.mask,
+                            provenance=r.provenance,condition=condition(codec,qp,r.mask,cfg,domain=r.task),**table))
+                write_json(out/'measurements.partial.json',cache)
+                print(f'V34 {args.experiment} cache {split} {index+1}/{len(groups[split])}',flush=True)
+        cache['sha256']=digest(cache); write_json(meas_path,cache)
+        # Inputs are a separate immutable tensor archive; only native tensors.
+        torch.save(inputs,inputs_path)
     models=train_models(cache,inputs,cfg,out,device,task_models)
     evaluate(groups,heads,models,cfg,meta,out,Path(args.trackeval) if args.trackeval else None)
     write_json(out/'complete.json',dict(status='complete',experiment=args.experiment,cache_sha256=cache['sha256'],

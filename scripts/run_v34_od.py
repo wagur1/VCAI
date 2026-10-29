@@ -26,7 +26,7 @@ from adaptive_vcm.v33ap.evaluate import inverse_boxes, safe_curve
 from adaptive_vcm.v34.protocol import ACTIONS, settings, digest, codec_factory
 from adaptive_vcm.v34.preprocessing import region_maps, filter_clip
 from adaptive_vcm.v34.model import Controller
-from adaptive_vcm.v34.learning import targets, train_controller, calibrate, select_action
+from adaptive_vcm.v34.learning import targets, train_controller, calibrate, relative_damage
 from adaptive_vcm.v34.checkpoint import save_checkpoint, load_checkpoint
 from adaptive_vcm.v34.runner import input_pair, condition, measure_candidates, infer, write_json
 from adaptive_vcm.v34.tasks import Heads
@@ -123,37 +123,63 @@ def run_benchmark(args):
             models.append(load_checkpoint(out / f"controller_{seed}.pth", device))
             print(f"  Loaded controller_{seed}.pth", flush=True)
     else:
-        print(f"Extracting source detection features and measuring candidate table...", flush=True)
-        cache = dict(schema=cfg["schema"], experiment="ar_od", settings=cfg, actions=[list(a) for a in ACTIONS],
-                     sources={}, task_models=task_models, rows=[])
-        
-        for split in ("train", "cal"):
-            for idx, r in enumerate(groups[split]):
-                heads.source(r)
-                maps = region_maps(r.rgb, r.source_predictions["od"])
-                inputs[r.id] = input_pair(r.rgb, maps)
-                cache["sources"][r.id] = dict(split=split, pixel_sha256=hashlib.sha256(r.rgb.tobytes()).hexdigest(),
-                                              frame_recipe=r.frame_recipe)
-                for codec in cfg["codecs"]:
-                    for qp in cfg["qps"]:
-                        c = codec_factory("od", codec, qp, cfg)
-                        table = measure_candidates(r.rgb, maps, ACTIONS, c, "od", lambda rgb: heads.costs(rgb, r))
-                        cache["rows"].append(dict(
-                            id=r.id, split=split, domain="od", codec=codec, qp=qp, mask=r.mask,
-                            provenance=r.provenance, condition=condition(codec, qp, r.mask, cfg, domain="od"),
-                            **table
-                        ))
-                if (idx + 1) % 8 == 0 or (idx + 1) == len(groups[split]):
-                    print(f"  Candidate cache {split}: {idx + 1}/{len(groups[split])} images done", flush=True)
+        if meas_file.is_file():
+            print(f"Reusing existing candidate measurements from {meas_file} (no re-encoding)...", flush=True)
+            cache = json.loads(meas_file.read_text(encoding="utf-8"))
+            inputs_file = out / "controller_inputs.pth"
+            if inputs_file.is_file():
+                inputs = torch.load(inputs_file, map_location="cpu", weights_only=True)
+            else:
+                print("Rebuilding controller inputs from source images (detector only)...", flush=True)
+                for split in ("train", "cal"):
+                    for r in groups[split]:
+                        heads.source(r)
+                        inputs[r.id] = input_pair(r.rgb, region_maps(r.rgb, r.source_predictions["od"]))
+                torch.save(inputs, inputs_file)
+        else:
+            print(f"Extracting source detection features and measuring candidate table...", flush=True)
+            cache = dict(schema=cfg["schema"], experiment="ar_od", settings=cfg, actions=[list(a) for a in ACTIONS],
+                         sources={}, task_models=task_models, rows=[])
+            
+            for split in ("train", "cal"):
+                for idx, r in enumerate(groups[split]):
+                    heads.source(r)
+                    maps = region_maps(r.rgb, r.source_predictions["od"])
+                    inputs[r.id] = input_pair(r.rgb, maps)
+                    cache["sources"][r.id] = dict(split=split, pixel_sha256=hashlib.sha256(r.rgb.tobytes()).hexdigest(),
+                                                  frame_recipe=r.frame_recipe)
+                    for codec in cfg["codecs"]:
+                        for qp in cfg["qps"]:
+                            c = codec_factory("od", codec, qp, cfg)
+                            table = measure_candidates(r.rgb, maps, ACTIONS, c, "od", lambda rgb: heads.costs(rgb, r))
+                            cache["rows"].append(dict(
+                                id=r.id, split=split, domain="od", codec=codec, qp=qp, mask=r.mask,
+                                provenance=r.provenance, condition=condition(codec, qp, r.mask, cfg, domain="od"),
+                                **table
+                            ))
+                    if (idx + 1) % 8 == 0 or (idx + 1) == len(groups[split]):
+                        print(f"  Candidate cache {split}: {idx + 1}/{len(groups[split])} images done", flush=True)
 
-        cache["sha256"] = digest({k: v for k, v in cache.items() if k != "sha256"})
-        write_json(meas_file, cache)
+            cache["sha256"] = digest({k: v for k, v in cache.items() if k != "sha256"})
+            write_json(meas_file, cache)
+            torch.save(inputs, out / "controller_inputs.pth")
 
         # 4. Train Controller models
         print(f"Training V34 controller models (3 seeds)...", flush=True)
-        fit_rows = [r for r in cache["rows"] if r["split"] == "train"]
-        cal_rows = [r for r in cache["rows"] if r["split"] == "cal"]
-        choices = [targets(r["rate"], np.array(r["damage"], float), r["mask"], cfg["damage_tolerance"], cfg["budget_ratio"]) for r in fit_rows]
+        norm_rows = []
+        for r in cache["rows"]:
+            r2 = dict(r)
+            if cfg.get("domain_primary_mask"):
+                r2["mask"] = [False, True, False]
+                r2["condition"] = condition(r2["codec"], r2["qp"], r2["mask"], cfg, domain="od")
+            norm_rows.append(r2)
+        fit_rows = [r for r in norm_rows if r["split"] == "train"]
+        cal_rows = [r for r in norm_rows if r["split"] == "cal"]
+        if cfg.get("damage_units") == "relative":
+            fit_rows = relative_damage(fit_rows, cfg.get("damage_floor"))
+            cal_rows = relative_damage(cal_rows, cfg.get("damage_floor"))
+        choices = [targets(r["rate"], np.array(r["damage"], float), r["mask"], cfg["damage_tolerance"],
+                           cfg["budget_ratio"], cfg.get("oracle_damage_weight")) for r in fit_rows]
         write_json(out / "train_oracle.json", dict(
             scope="TRAIN measured oracle", count=len(choices),
             action_counts={str(a): choices.count(a) for a in range(len(ACTIONS))}
@@ -162,14 +188,15 @@ def run_benchmark(args):
         cond_len = 9 if cfg.get("domain_condition") else 6
         for seed in cfg["seeds"]:
             torch.manual_seed(seed); np.random.seed(seed)
-            model = Controller(len(ACTIONS), conditions=cond_len)
+            model = Controller(len(ACTIONS), conditions=cond_len, task_logits=cfg.get("task_logits", False))
             history = train_controller(model, fit_rows, inputs, cfg, device)
             pred = [infer(model, inputs[r["id"]], r["condition"]) for r in cal_rows]
             actual = np.array([r["damage"] for r in cal_rows], float)
             calibration = calibrate(
                 np.array([p["risk"] for p in pred]), actual,
                 np.array([p["rate"] for p in pred]), np.array([r["rate"] for r in cal_rows]),
-                np.array([r["mask"] for r in cal_rows], bool), cfg["cal_coverage"]
+                np.array([r["mask"] for r in cal_rows], bool), cfg["cal_coverage"],
+                mode=cfg.get("calibration_mode", "quantile")
             )
             meta_dict = dict(seed=seed, settings=cfg, actions=[list(a) for a in ACTIONS],
                              experiment="ar_od", task_models=task_models, calibration=calibration,
@@ -191,8 +218,10 @@ def run_benchmark(args):
         records = groups[split]
         rows = []
         for idx, r in enumerate(records):
-            heads.source(r)
-            maps = region_maps(r.rgb, r.source_predictions["od"])
+            source = SourceRecord(r.id, r.task, {k: v for k, v in r.item.items() if k != "label"},
+                                  r.rgb, r.geometry, r.frame_recipe, targets=None)
+            heads.source(source)
+            maps = region_maps(source.rgb, source.source_predictions["od"])
             pair = input_pair(r.rgb, maps)
             
             for codec_name in cfg["codecs"]:
@@ -205,6 +234,13 @@ def run_benchmark(args):
                             packets[action] = codec.roundtrip(pixels, source_shape=r.rgb.shape, task="od")
                         return packets[action]
 
+                    guard_costs = {}
+                    def source_score(rgb):
+                        sha = hashlib.sha256(rgb.tobytes()).hexdigest()
+                        if sha not in guard_costs:
+                            guard_costs[sha] = heads.costs(rgb, source, source_only=True)
+                        return guard_costs[sha]
+
                     anchor = encode(0)
                     arms = {
                         "anchor": (0, anchor, {}),
@@ -212,15 +248,21 @@ def run_benchmark(args):
                     }
                     for m in models:
                         forced, selected, p, details = choose_packet(
-                            m, pair, codec_name, qp, r.mask, cfg, anchor, encode, domain="od"
+                            m, pair, codec_name, qp, source.mask, cfg, anchor, encode, domain="od",
+                            source_score=source_score if cfg.get("source_guard_limits") is not None else None
                         )
                         s = m.metadata["seed"]
                         arms[f"forced_{s}"] = (forced, encode(forced), {**details, "rate_fallback": False})
                         arms[f"selected_{s}"] = (selected, p, details)
+                        calibrated = details["calibrated_action"]
+                        cp = encode(calibrated)
+                        fallback = cp.coded_bytes > anchor.coded_bytes * cfg["budget_ratio"]
+                        arms[f"calibrated_{s}"] = (0 if fallback else calibrated, anchor if fallback else cp,
+                                                  {"calibrated_action": calibrated, "rate_fallback": fallback})
 
                     if frozen_model is not None:
                         # Condition vector with 9 dimensions for frozen model
-                        frozen_cond = condition(codec_name, qp, r.mask, dict(budget_ratio=1.01, domain_condition=True), domain="od")
+                        frozen_cond = condition(codec_name, qp, source.mask, dict(budget_ratio=1.01, domain_condition=True), domain="od")
                         frozen_out = infer(frozen_model, pair, frozen_cond)
                         f_forced = int(np.argmax(frozen_out["logits"]))
                         arms["forced_frozen_303401"] = (f_forced, encode(f_forced), {

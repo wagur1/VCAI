@@ -11,7 +11,7 @@ from ..v33ap.evaluate import inverse_boxes,safe_curve
 from ..coco_metrics import coco_map,coco_box
 from .protocol import ACTIONS,codec_factory
 from .preprocessing import region_maps,filter_clip
-from .learning import select_action,domain_calibration
+from .learning import select_action,select_direct_action,domain_calibration,oracle_weights
 from .runner import condition,input_pair,infer,write_json
 
 def tracking_curve(anchor,adaptive):
@@ -23,12 +23,12 @@ def tracking_curve(anchor,adaptive):
     reliable=all(monotone.get(k,False) for k in ('anchor','adaptive')) and not result.get('invalid_reason')
     result.update(quality_unit='HOTA percentage points',bd_reliable=reliable)
     if not all(monotone.get(k,False) for k in ('anchor','adaptive')):
-        result.update(bd_rate_pct=None,pchip_bd_rate_pct=None,bd_quality_pp=None,
-                      invalid_reason='nonmonotone HOTA/rate curve; use raw same-QP metrics',
+        result.update(bd_rate_pct=None,
+                      invalid_reason='nonmonotone HOTA/rate curve; cubic bd_rate omitted, use pchip_bd_rate_pct and raw same-QP metrics',
                       point_passes=False,screen_passes=False)
     return result
 
-def source_guard_choice(rates,costs,mask,limits,budget):
+def source_guard_choice(rates,costs,mask,limits,budget,weights=None):
     """Measured excess source-consistency cost, never GT accuracy/HOTA."""
     rate=np.asarray(rates,float); values=np.array(costs,float); active=np.asarray(mask,bool)
     limits=np.asarray(limits,float)
@@ -38,31 +38,49 @@ def source_guard_choice(rates,costs,mask,limits,budget):
     delta=values-values[0]
     feasible=np.isfinite(values[:,active]).all(1)&np.isfinite(rate)&(rate<=budget)&(rate>0)
     feasible &= (delta[:,active]<=limits[active]).all(1)
-    # Measured rate is the objective; a consistency improvement breaks equal-rate ties.
-    score=rate+1e-6*np.nan_to_num(delta[:,active],nan=1e6).mean(1)
+    # Measured rate is the objective; consistency cost weights or breaks ties.
+    if weights is None:
+        score=rate+1e-6*np.nan_to_num(delta[:,active],nan=1e6).mean(1)
+    else:
+        w=oracle_weights(weights)[None,active]
+        score=rate+(w*np.nan_to_num(delta[:,active],nan=1e6)).mean(1)
     selected=int(np.argmin(np.where(feasible,score,np.inf)))
     clean=lambda a:[[float(v) if np.isfinite(v) else None for v in row] for row in a]
     return selected,dict(scope='source consistency; no task accuracy guarantee',limits=limits.tolist(),
                          costs=clean(values),excess=clean(delta),rate=rate.tolist(),rejected=np.where(~feasible)[0].tolist())
+
+
+def shortlist_actions(out,mask,calibrated,forced,size,seed='forced'):
+    """Distinct nonidentity trials, with identity always first."""
+    if seed not in ('forced','rank'): raise ValueError('unknown shortlist seed')
+    if type(size) is not int or size<1: raise ValueError('positive source shortlist required')
+    active=np.asarray(mask,bool)
+    rank=out['rate']+.25*np.maximum(out['risk'][:,active],0).mean(1)
+    ranked=np.argsort(rank).tolist()
+    order=[calibrated,forced,*ranked] if seed=='rank' else [forced,*ranked]
+    candidates=[]
+    for action in order:
+        if action and action not in candidates: candidates.append(int(action))
+        if len(candidates)>=size: break
+    return [0,*candidates]
+
 
 def choose_packet(model,pair,codec_name,qp,mask,cfg,anchor,encode,*,domain=None,source_score=None):
     """CNN candidates; calibrated ablation or real decoded source-only guard."""
     start=time.perf_counter(); out=infer(model,pair,condition(codec_name,qp,mask,cfg,domain=domain))
     inference_seconds=time.perf_counter()-start
     forced=int(np.argmax(out['logits']))
+    if getattr(model,'task_logits',False):
+        forced=select_direct_action(out,mask,cfg['damage_tolerance'],cfg['budget_ratio'],
+            weights=cfg.get('oracle_damage_weight'),domain_idx=('ar','od','ot').index(domain) if domain else None)
     selected=select_action(out['risk'],out['rate'],domain_calibration(model.metadata['calibration'],domain),mask,cfg['damage_tolerance'],cfg['budget_ratio'])
     calibrated=selected
     if source_score is not None:
-        active=np.asarray(mask,bool)
-        rank=out['rate']+.25*np.maximum(out['risk'][:,active],0).mean(1)
-        candidates=[]
-        for action in [forced,*np.argsort(rank).tolist()]:
-            if action and action not in candidates: candidates.append(action)
-            if len(candidates)>=cfg['source_shortlist']: break
-        actions=[0,*candidates]; packets=[anchor,*[encode(a) for a in candidates]]
+        actions=shortlist_actions(out,mask,calibrated,forced,cfg['source_shortlist'],cfg.get('shortlist_seed','forced'))
+        packets=[anchor,*[encode(a) for a in actions[1:]]]
         rates=[p.coded_bytes/anchor.coded_bytes for p in packets]
         costs=[source_score(p.decoded) if rate<=cfg['budget_ratio'] else [None]*3 for p,rate in zip(packets,rates)]
-        choice,guard=source_guard_choice(rates,costs,mask,cfg['source_guard_limits'],cfg['budget_ratio'])
+        choice,guard=source_guard_choice(rates,costs,mask,cfg['source_guard_limits'],cfg['budget_ratio'],cfg.get('guard_damage_weight'))
         guard['rejected']=[actions[i] for i in guard['rejected']]
         return forced,actions[choice],packets[choice],dict(predicted_risk=out['risk'],predicted_rate=out['rate'],
             proposed_action=actions[choice],calibrated_action=calibrated,rate_fallback=False,
@@ -156,7 +174,7 @@ def evaluate(groups,heads,models,cfg,meta,out,trackeval_path):
         for index,r in enumerate(groups[split]):
             # Copy only source fields into support/selection. Labels and GT IDs
             # remain in the outer record for scoring after stream selection.
-            source=SourceRecord(r.id,r.task,{k:v for k,v in r.item.items() if k!='label'},r.rgb,r.geometry,r.frame_recipe)
+            source=SourceRecord(r.id,r.task,{k:v for k,v in r.item.items() if k!='label'},r.rgb,r.geometry,r.frame_recipe,targets=None)
             start=time.perf_counter(); heads.source(source)
             map_start=time.perf_counter()
             maps=region_maps(source.rgb,source.source_predictions['od']); pair=input_pair(source.rgb,maps)
@@ -227,7 +245,7 @@ def evaluate(groups,heads,models,cfg,meta,out,trackeval_path):
                                 from .tasks import detection_distance
                                 from ..v33ap.tasks import frame_indices
                                 row['od_source_distance']=detection_distance([source.source_predictions['od'][i] for i in frame_indices(len(r.rgb))],pred['od_consistency'])
-                            else:
+                            elif 'ot' in source.source_predictions:
                                 from .tracking import track_frames,tracking_cost
                                 if 'ot_frames' not in pred: pred['ot_frames']=track_frames(pred['ot_detections'])
                                 row['ot_source_cost']=tracking_cost(pred['ot_frames'],source.source_predictions['ot'])

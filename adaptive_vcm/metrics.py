@@ -19,9 +19,11 @@ def _curve(rate, quality):
 
 
 def pchip_bd(rate_a, quality_a, rate_b, quality_b) -> float:
-    """Sensitivity readout: equal-quality plateaus use their minimum bitrate."""
+    """Monotone Pareto envelope; equal-quality plateaus use minimum bitrate."""
     def fit(rate, quality):
         r, q = _curve(rate, quality)
+        order = np.argsort(r)
+        r = r[order]; q = np.maximum.accumulate(q[order])
         unique = np.unique(q)
         if len(unique) < 2:
             return None, None

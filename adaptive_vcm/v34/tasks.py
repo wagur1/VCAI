@@ -6,7 +6,7 @@ import torch
 import torch.nn.functional as F
 from scipy.optimize import linear_sum_assignment
 from ..v32vc.train import tensor
-from ..v33ap.tasks import TaskHeads,ar_forward,od_forward,frame_indices,prediction,distance
+from ..v33ap.tasks import TaskHeads,ar_forward,od_forward,od_forward_label_free,frame_indices,prediction,distance
 from ..v32.tracking import iou_matrix
 
 def detection_distance(reference,current):
@@ -77,11 +77,13 @@ class Heads(TaskHeads):
             logits,f=ar_forward(self.action,tensor(r.rgb,self.device))
             r.source_predictions['ar']=logits.softmax(-1)[0].cpu().numpy(); r.source_features['ar']=f.cpu()
         r.mask=[len(r.rgb)>1,self.experiment=='ar_od',self.experiment=='ar_ot' and len(r.rgb)>1]
+        if self.cfg.get('domain_primary_mask'):
+            r.mask=[r.task=='ar' and len(r.rgb)>1,r.task=='od',r.task=='ot' and len(r.rgb)>1]
         r.provenance=[('K400 label + source KL/feature' if r.task=='ar' else 'source KL/feature only') if r.mask[0] else None,
             ('COCO boxes + source feature' if r.task=='od' else 'source detection/feature consistency only') if r.mask[1] else None,
             ('MOT20 GT boxes/IDs, local window surrogate' if r.task=='ot' else 'source tracks consistency only') if r.mask[2] else None]
         if r.mask[1]:
-            _,f=od_forward(self.detector,tensor(r.rgb,self.device),frame_indices(len(r.rgb)))
+            _,f=od_forward_label_free(self.detector,tensor(r.rgb,self.device),frame_indices(len(r.rgb)))
             r.source_features['od']=f.cpu()
         if r.mask[2]:
             from .tracking import track_frames
@@ -99,7 +101,7 @@ class Heads(TaskHeads):
             result[0]=float(value)
         if r.mask[1]:
             indices=frame_indices(len(rgb))
-            if r.task=='od':
+            if r.task=='od' and not source_only:
                 targets=[{k:v.to(self.device) for k,v in r.targets.items()}]
                 # Faster R-CNN's GT loss samples proposals even with frozen
                 # weights. Use common random numbers across all candidates.
@@ -109,7 +111,7 @@ class Heads(TaskHeads):
                     loss,f=od_forward(self.detector,x,indices,targets)
                 value=float(sum(loss.values()))
             else:
-                preds,f=od_forward(self.detector,x,indices)
+                preds,f=od_forward_label_free(self.detector,x,indices)
                 value=detection_distance([r.source_predictions['od'][i] for i in indices],[prediction(v) for v in preds])
             result[1]=value+.1*float(distance(f,r.source_features['od']))
         if r.mask[2]:

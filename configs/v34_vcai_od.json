@@ -1,0 +1,18 @@
+{
+  "schema": "adaptive-vcm-v34-1", "fix": "vcai-repaired-od",
+  "seeds": [303401, 303402, 303403],
+  "codecs": ["h264", "h265"], "qps": [30, 35, 40, 45], "preset": "medium",
+  "fps": 25, "frames": 16, "temporal_stride": 2, "ar_size": 128, "od_size": 320,
+  "ot_size": 640, "train_count": 192, "cal_count": 64, "dev_count": 48,
+  "test_count": 256, "ot_frames": 256, "epochs": 60, "lr": 0.001,
+  "domain_primary_mask": true,
+  "damage_units": "relative", "damage_floor": [1.0, 0.25, 0.25],
+  "oracle_damage_weight": [0.5, 0.25, 2.0],
+  "guard_damage_weight": [0.25, 0.25, 0.25],
+  "damage_tolerance": [0.05, 0.05, 0.05], "budget_ratio": 1.01,
+  "cal_coverage": 0.9, "calibration_mode": "mean_ucb", "fixed_action": 11,
+  "task_logits": true, "task_ce_weight": 1.0,
+  "risk_loss": "huber", "risk_scale": [0.05, 0.05, 0.05],
+  "source_guard_limits": [0.025, 0.05, 0.015], "source_shortlist": 5, "shortlist_seed": "rank",
+  "detector": "resnet50", "detector_detections": 300, "detector_batch": 2
+}

@@ -50,6 +50,16 @@ def od_forward(detector,x,indices,targets=None):
     finally: hook.remove()
 
 
+def od_forward_label_free(detector,x,indices):
+    """Extract predictions/features without targets, including from a training head."""
+    training=detector.model.training
+    try:
+        detector.model.training=False
+        return od_forward(detector,x,indices)
+    finally:
+        detector.model.training=training
+
+
 def prediction(value):
     return {k:v.detach().cpu().numpy().copy() for k,v in value.items() if k in ('boxes','labels','scores')}
 
