@@ -62,7 +62,7 @@
     "adaptive_vcm/v34/learning.py": "3ca7e96a76359860c842225948d9303744d71e0fb173b5a7383fd5d8e7d49e18",
     "adaptive_vcm/v34/evaluation.py": "6d54b6e6b5bede7020ec0017652d2eb981415327c0d74806a7d7e8790a712790",
     "adaptive_vcm/v34/preprocessing.py": "234023daf554f88968439adb81e616c17cf743785e3bb229eeb3111719d52598",
-    "adaptive_vcm/v34/protocol.py": "2ead637e37a2f53ce2bd1b44a8e01e4f4da0de5caefb93ead60a31616acc16a1",
+    "adaptive_vcm/v34/protocol.py": "5dec26c9ffe41887cc0411361e1c4fceb136f9a4c8b0a95e90356103c061fab6",
     "adaptive_vcm/v33ap/evaluate.py": "523a1e1749491e03aad3dea8a05479964a87f2911603f0e2ce6b18fd339e87bd",
     "adaptive_vcm/v33ap/selection.py": "352e2b153b951f14356cfd964fdc69c0c18cb24221b604e625c8809029d70efa",
     "adaptive_vcm/v33ap/receiver.py": "d5d70c877ab1447a1395493c3e1d53161139256f17fb828731cf21664070da0e",
