@@ -66,18 +66,21 @@ def build_notebook_script(commit: str, slug: str, stage: str, config_name: str, 
                           dataset_slug: str) -> str:
     pin = trackeval_pin()
     check_code = (
-        "import sys; sys.path.insert(0, '/kaggle/working/VCAI'); "
+        "import sys; sys.path.insert(0, '/tmp/VCAI'); "
         "from pathlib import Path; "
         "from adaptive_vcm.v32.tracking import load_trackeval; "
-        "module = load_trackeval(Path('/kaggle/working/TrackEval')); "
+        "module = load_trackeval(Path('/tmp/TrackEval')); "
         "print('TrackEval import OK', module.__file__)"
     )
     return f'''import os, pathlib, shutil, subprocess, sys, tarfile, time
 
 WORK = pathlib.Path('/kaggle/working')
 INPUT = pathlib.Path('/kaggle/input')
-REPO = WORK / 'VCAI'
-TRACKEVAL = WORK / 'TrackEval'
+REPO = pathlib.Path('/tmp/VCAI')
+TRACKEVAL = pathlib.Path('/tmp/TrackEval')
+for p in (REPO, TRACKEVAL):
+    if p.exists():
+        shutil.rmtree(p)
 SLUG = {repr(slug)}
 STAGE = {repr(stage)}
 CONFIG = {repr(config_name)}

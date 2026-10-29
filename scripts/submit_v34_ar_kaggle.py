@@ -54,7 +54,9 @@ def build_notebook_script(commit: str, slug: str, config_name: str = "v34_vcai_a
 
 WORK = pathlib.Path('/kaggle/working')
 INPUT = pathlib.Path('/kaggle/input')
-REPO = WORK / 'VCAI'
+REPO = pathlib.Path('/tmp/VCAI')
+if REPO.exists():
+    shutil.rmtree(REPO)
 SLUG = {slug!r}
 CONFIG = {config_name!r}
 OUT = WORK / 'outputs' / SLUG

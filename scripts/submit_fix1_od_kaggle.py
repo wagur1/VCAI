@@ -54,7 +54,9 @@ def build_notebook_script(commit: str, slug: str, counts: dict, config_name: str
 
 WORK = pathlib.Path('/kaggle/working')
 INPUT = pathlib.Path('/kaggle/input')
-REPO = WORK / 'VCAI'
+REPO = pathlib.Path('/tmp/VCAI')
+if REPO.exists():
+    shutil.rmtree(REPO)
 SLUG = {repr(slug)}
 COUNTS = {counts!r}
 OUT = WORK / 'outputs' / SLUG
