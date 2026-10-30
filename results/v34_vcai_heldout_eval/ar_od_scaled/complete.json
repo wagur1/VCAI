@@ -1,0 +1,11 @@
+{
+  "status": "complete",
+  "experiment": "ar_od",
+  "cache_sha256": "d5fceedc3bfd75792201b18577dcb1aa672abfa9466c835945ed80f87b9f9d09",
+  "checkpoint_sha256": [
+    "d761e34ba05e10b597716ba82f806d9fde159c4b79815c20b85e7c182330d46f",
+    "f442ccb08803327e8fce3d787cf6c7926ddde349698448ef6c02debe46990c97",
+    "f0e3459a8767985fc36ce82834861bf8dc8b603a9993c3db301cd8bcc65bb1d5"
+  ],
+  "scope": "exploratory historical domain pilot; MOT20 has no AR ground truth"
+}

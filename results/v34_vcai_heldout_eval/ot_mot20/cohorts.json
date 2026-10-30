@@ -1,0 +1,1250 @@
+{
+  "ot/MOT20-02/000001": {
+    "split": "train",
+    "pixel_sha256": "63763f41658fa2a2a6ff76f25a4017ede67c92ed4bd694af7585fc9a3c288b81",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-02/000017": {
+    "split": "train",
+    "pixel_sha256": "456861d14b15d3906108d176076539be4b21849bf387ff685654a90ee2f3b81b",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-02/000033": {
+    "split": "train",
+    "pixel_sha256": "6cb1077e6af6127d02e17622bfa3498150a43984e93218b1baf3f7df21237b57",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-02/000049": {
+    "split": "train",
+    "pixel_sha256": "f6277362a97cf4af33640366b299182cde373bbe6b7f828d0c926099413d2fa7",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-02/000065": {
+    "split": "train",
+    "pixel_sha256": "f105906d5799a0eed1da8a4d0059360f45349d98c15870903c2a1091d73ad59d",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-02/000081": {
+    "split": "train",
+    "pixel_sha256": "4fefe748848ac61e52ffc617dd53754dccb408ee062d098fbeb3e67ffd44d62e",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-02/000097": {
+    "split": "train",
+    "pixel_sha256": "66a206799fac11b01a81cb87629416c96f7cdccddfe9e79b8b676caf246e8281",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-02/000113": {
+    "split": "train",
+    "pixel_sha256": "c2c6cf981a71908ed200e64bab31e28e70a7cf8d6288b88b5c713bbbc6b558fd",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-02/000129": {
+    "split": "train",
+    "pixel_sha256": "b437f5fcf0a3cc7fa7aafd5c708c02256853a3c187ef186bfa0a17e4f5383fc1",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-02/000145": {
+    "split": "train",
+    "pixel_sha256": "f0d619b2c6b17a0bd33a4b8236ac7b052c604e0afceb29b275daab5e81abd1f4",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-02/000161": {
+    "split": "train",
+    "pixel_sha256": "036caf7054310707d161c64f1ef125abd22fb617d2f243406e0f57cdf9f26dd1",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-02/000177": {
+    "split": "train",
+    "pixel_sha256": "5d70bf2624f98f682007f812d8957d30df4bc039eb2b701c79b375db50579ae9",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-02/000193": {
+    "split": "cal",
+    "pixel_sha256": "618c71d88aa22be0e948c74c780315aacaece5de703af55a327f184be6e1596b",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-02/000209": {
+    "split": "cal",
+    "pixel_sha256": "80ec785fac196331e6c39bd03e56b03ea0973773b549860f3e11238643684188",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-02/000225": {
+    "split": "cal",
+    "pixel_sha256": "75641443e572ec3a3ddab6eb27c495f482825cf88d20945c0bd0bd4a323ffb76",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-02/000241": {
+    "split": "cal",
+    "pixel_sha256": "0e4a904a19c9693683dcbd152797788230213528d8addeab6f7573bc4023ecf1",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255,
+        256
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-03/000001": {
+    "split": "dev",
+    "pixel_sha256": "118c49124b815d52924a11ce1876d50f54240a9bf45b98601da435a35de26498",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-03/000017": {
+    "split": "dev",
+    "pixel_sha256": "58fb468abbdf5bda3d69afc9410342b414e28da8330cf56101beb0a7c08d2dc7",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-03/000033": {
+    "split": "dev",
+    "pixel_sha256": "99fda89d6efe6115eb4b5c5509d61b62c658aa2f09fc4daa2461193d0a9a4e4b",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-03/000049": {
+    "split": "dev",
+    "pixel_sha256": "5ad5a29666168dc844f7a4e151595c4c10ac135d9a3b9b498a5cccb60d08eeb9",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-03/000065": {
+    "split": "dev",
+    "pixel_sha256": "ba02630bd7e3ba69b9f8acaefb9dc0c6ac663a335ca9bdbc3869885d4fb57e74",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-03/000081": {
+    "split": "dev",
+    "pixel_sha256": "92be7e54b2ac52392e7037b7575765619bdef89e96b1aadac1de14bb5e4cdddc",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-03/000097": {
+    "split": "dev",
+    "pixel_sha256": "2dba179009803e20a8fdbf2aa7d285b3da1a799285047de583a293f62b3f45ee",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-03/000113": {
+    "split": "dev",
+    "pixel_sha256": "4f4dde81b32a2142ba630057228ea6ac4b0b4a5342a337ac22dec80dfe53f9f0",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-03/000129": {
+    "split": "dev",
+    "pixel_sha256": "b1f8f1e8d43488caba5c0e3b71c53fa6fe40dcbf531fbe32149b6b676229d5b3",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-03/000145": {
+    "split": "dev",
+    "pixel_sha256": "c260c10f4500c263d1860c67ad8450a5d9b00c0f1bdb460625b8ce9397b33de0",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-03/000161": {
+    "split": "dev",
+    "pixel_sha256": "0f79d2ecd25088fce294418c5eecbed1e5f6517785a00a2a6469b12e0f9bd295",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-03/000177": {
+    "split": "dev",
+    "pixel_sha256": "8b7fb2dfbf3814c906dc4f636f99fa2e217cadfee3af29dc481d01be673b0b40",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-03/000193": {
+    "split": "dev",
+    "pixel_sha256": "f76358c14b073a2f673c9069e8c203db9a32bacd3fe98b0e16d05b88bb7047d3",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-03/000209": {
+    "split": "dev",
+    "pixel_sha256": "c3d71bd033b1b24dceb28a431129a8af24c623261013ca1de97445b587b4bc2f",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-03/000225": {
+    "split": "dev",
+    "pixel_sha256": "a6c03af060f84b40a41bb19d511001b5daaa102192697cfe26dc6f562490214b",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-03/000241": {
+    "split": "dev",
+    "pixel_sha256": "f5c3e1a337bcf616fdbaa91f623715d886e6b09fb96fc232458a98b19fc42e88",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255,
+        256
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-01/000001": {
+    "split": "test",
+    "pixel_sha256": "11c493a1941d48935daef1a9f4e9b58062ede2e5c6339eb01d4e177ed6c3b165",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-01/000017": {
+    "split": "test",
+    "pixel_sha256": "ddb4297714811b7570a956f0726778f15950e414df7e46462078870a1901921d",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-01/000033": {
+    "split": "test",
+    "pixel_sha256": "1d7348b21e15637f4584ecad1cdb967082472b48ae815edca1044ef75b104e55",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-01/000049": {
+    "split": "test",
+    "pixel_sha256": "ac57f4973e72382558ee9c12c198a1782c8adef054b4ed7f403d7daef1697ba9",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-01/000065": {
+    "split": "test",
+    "pixel_sha256": "d4639e7e525bca93fbc68d356ce8e46515fa478800fa8e812f1542a667eb43b8",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-01/000081": {
+    "split": "test",
+    "pixel_sha256": "151c038e15163365008db15ca4dcec3c8864ef061c5301b1bd671e419cfeadc8",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-01/000097": {
+    "split": "test",
+    "pixel_sha256": "91f5e8d0f8eefcaf46b2cb1507ccd8f30a253570d86c3779165c0728802f9eef",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        97,
+        98,
+        99,
+        100,
+        101,
+        102,
+        103,
+        104,
+        105,
+        106,
+        107,
+        108,
+        109,
+        110,
+        111,
+        112
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-01/000113": {
+    "split": "test",
+    "pixel_sha256": "d729b1355a427c06e2f8f3dd4047e0726467ddc29ff811a4d64987f50f0ba789",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        113,
+        114,
+        115,
+        116,
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-01/000129": {
+    "split": "test",
+    "pixel_sha256": "3c7dc137a03e57de7618884fd4e70004b6e2a39b4d0dfbf98631d7e24c105a8a",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140,
+        141,
+        142,
+        143,
+        144
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-01/000145": {
+    "split": "test",
+    "pixel_sha256": "113df741a4c442a9d5711d15b4aa70522dd5d363a0ec91fbcaa4ed73aa9adad3",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-01/000161": {
+    "split": "test",
+    "pixel_sha256": "5a568cf310f30d7b2c88f52b22205103918906b4aa06c4814c34bb52cc6debbe",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-01/000177": {
+    "split": "test",
+    "pixel_sha256": "8eeaa7f439f4aa00da42eba02dfd66ee0f5b16fcd8e302ef04db7cdab4c6927b",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-01/000193": {
+    "split": "test",
+    "pixel_sha256": "fe64c80e10eaba80a85d67bae6704bde254c8f6eb905f30197beae3c3992fdd1",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-01/000209": {
+    "split": "test",
+    "pixel_sha256": "25f6e46148f1aa79bc9d9bcc55350a69b3e7a3477a94664a2667c9355c174de9",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-01/000225": {
+    "split": "test",
+    "pixel_sha256": "9934085efab0a0a342d620ac54a9ded98d9d4ae2910c4d058beaa9090653d3bc",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        225,
+        226,
+        227,
+        228,
+        229,
+        230,
+        231,
+        232,
+        233,
+        234,
+        235,
+        236,
+        237,
+        238,
+        239,
+        240
+      ],
+      "repeated_frames": 0
+    }
+  },
+  "ot/MOT20-01/000241": {
+    "split": "test",
+    "pixel_sha256": "e2f7d1cfb4309f0676da8cb226e1472816607384bff096b27369c9da09c17ff9",
+    "frame_recipe": {
+      "kind": "contiguous-MOT20",
+      "frame_indices": [
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255,
+        256
+      ],
+      "repeated_frames": 0
+    }
+  }
+}

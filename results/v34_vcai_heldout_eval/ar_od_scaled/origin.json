@@ -1,0 +1,6 @@
+{
+  "origin_commit": "7d523276f443890d3dcdd33030bf050ade36c33b",
+  "bundle_sha256": "6e8d4bf75c61c44565a00dcc99bb76c3b74e40bfce977c6a49fd0f09011f7311",
+  "datasets": "kineticscleaned+COCO2017 val2017",
+  "scope": "repaired V34 AR+OD scaled benchmark"
+}

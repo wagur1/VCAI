@@ -1,0 +1,232 @@
+﻿==== OD COCO test n=256
+--- h264 
+  calibrated_303401        cubic=-3.71  pchip=-4.28  dQ=+27.13
+  calibrated_303402        cubic=+11.06  pchip=-9.92  dQ=+60.37
+  calibrated_303403        cubic=+3.19  pchip=-6.27  dQ=+36.11
+  fixed                    cubic=+1.81  pchip=-5.25  dQ=+22.04
+  forced_303401            cubic=+3.93  pchip=-11.66  dQ=+75.80
+  forced_303402            cubic=-4.95  pchip=-9.84  dQ=+67.82
+  forced_303403            cubic=-0.75  pchip=-10.59  dQ=+67.27
+  forced_frozen_303401     cubic=+1.81  pchip=-5.25  dQ=+22.04
+  selected_303401          cubic=-10.19  pchip=-16.84  dQ=+102.25
+  selected_303402          cubic=-10.82  pchip=-16.37  dQ=+99.23
+  selected_303403          cubic=-7.52  pchip=-15.83  dQ=+97.20
+--- h265 
+  calibrated_303401        cubic=-10.87  pchip=-4.28  dQ=+34.23
+  calibrated_303402        cubic=-11.22  pchip=-7.67  dQ=+66.32
+  calibrated_303403        cubic=-12.05  pchip=-3.90  dQ=+30.76
+  fixed                    cubic=-4.52  pchip=-0.28  dQ=+3.78
+  forced_303401            cubic=-15.96  pchip=-8.49  dQ=+69.03
+  forced_303402            cubic=-21.92  pchip=-5.93  dQ=+42.40
+  forced_303403            cubic=-15.43  pchip=-6.58  dQ=+51.90
+  forced_frozen_303401     cubic=-4.52  pchip=-0.28  dQ=+3.78
+  selected_303401          cubic=-4.73  pchip=-15.74  dQ=+131.62
+  selected_303402          cubic=+21.82  pchip=-17.24  dQ=+142.63
+  selected_303403          cubic=-1.80  pchip=-15.53  dQ=+130.83
+==== OD COCO dev n=48
+--- h264 
+  calibrated_303401        cubic=-7.61  pchip=-2.24  dQ=+27.40
+  calibrated_303402        cubic=+1.34  pchip=+4.49  dQ=-34.58
+  calibrated_303403        cubic=+27.99  pchip=-0.75  dQ=+38.07
+  fixed                    cubic=+3.18  pchip=+4.57  dQ=-39.83
+  forced_303401            cubic=-11.83  pchip=-6.39  dQ=+67.60
+  forced_303402            cubic=-6.80  pchip=-4.90  dQ=+50.00
+  forced_303403            cubic=-4.16  pchip=+0.03  dQ=+4.62
+  forced_frozen_303401     cubic=+3.18  pchip=+4.57  dQ=-39.83
+  selected_303401          cubic=-11.29  pchip=-15.53  dQ=+157.89
+  selected_303402          cubic=-11.88  pchip=-14.75  dQ=+149.15
+  selected_303403          cubic=-1.24  pchip=-14.15  dQ=+148.11
+--- h265 
+  calibrated_303401        cubic=-5.72  pchip=-4.63  dQ=+55.34
+  calibrated_303402        cubic=-12.24  pchip=-8.80  dQ=+105.25
+  calibrated_303403        cubic=-5.92  pchip=-5.30  dQ=+87.10
+  fixed                    cubic=-11.55  pchip=-9.61  dQ=+124.23
+  forced_303401            cubic=-7.88  pchip=-7.10  dQ=+104.56
+  forced_303402            cubic=-7.04  pchip=-5.71  dQ=+73.29
+  forced_303403            cubic=-9.92  pchip=-8.84  dQ=+122.53
+  forced_frozen_303401     cubic=-11.55  pchip=-9.61  dQ=+124.23
+  selected_303401          cubic=-15.05  pchip=-16.61  dQ=+251.27
+  selected_303402          cubic=-15.00  pchip=-16.63  dQ=+250.32
+  selected_303403          cubic=-15.05  pchip=-16.70  dQ=+251.93
+==== AR+OD test
+--- ar/h264 swin3d_t
+  calibrated_303401        cubic=+0.20  pchip=+0.21  dQ=-18.25
+  calibrated_303402        cubic=+3.15  pchip=+4.01  dQ=-152.17
+  calibrated_303403        cubic=-2.63  pchip=-2.78  dQ=+85.64
+  fixed                    cubic=-2.16  pchip=-2.39  dQ=+65.63
+  forced_303401            cubic=+0.13  pchip=-0.06  dQ=-1.72
+  forced_303402            cubic=-1.47  pchip=-1.57  dQ=+41.65
+  forced_303403            cubic=+1.05  pchip=+0.67  dQ=-30.56
+  selected_303401          cubic=-41.18  pchip=-38.99  dQ=+1259.12
+  selected_303402          cubic=-38.86  pchip=-38.09  dQ=+1223.08
+  selected_303403          cubic=-42.99  pchip=-39.92  dQ=+1273.32
+--- ar/h264 r3d_18
+  calibrated_303401        cubic=+4.46  pchip=+5.58  dQ=-221.35
+  calibrated_303402        cubic=+9.00  pchip=+11.59  dQ=-323.71
+  calibrated_303403        cubic=+11.39  pchip=+14.71  dQ=-462.16
+  fixed                    cubic=+11.66  pchip=+14.52  dQ=-447.39
+  forced_303401            cubic=+10.19  pchip=+12.82  dQ=-422.77
+  forced_303402            cubic=+7.56  pchip=+9.42  dQ=-317.00
+  forced_303403            cubic=+7.78  pchip=+7.17  dQ=-285.82
+  selected_303401          cubic=+6.04  pchip=+8.56  dQ=-275.04
+  selected_303402          cubic=+7.78  pchip=+10.87  dQ=-328.28
+  selected_303403          cubic=+8.83  pchip=+12.24  dQ=-369.06
+--- ar/h265 swin3d_t
+  calibrated_303401        cubic=+1.18  pchip=+1.59  dQ=-101.94
+  calibrated_303402        cubic=+3.68  pchip=+4.60  dQ=-254.82
+  calibrated_303403        cubic=+0.89  pchip=+0.69  dQ=-33.20
+  fixed                    cubic=-6.02  pchip=-5.51  dQ=+253.54
+  forced_303401            cubic=-5.25  pchip=-4.75  dQ=+213.85
+  forced_303402            cubic=-3.03  pchip=-2.44  dQ=+140.34
+  forced_303403            cubic=+0.15  pchip=+0.34  dQ=-64.28
+  selected_303401          cubic=-22.71  pchip=-27.08  dQ=+1234.51
+  selected_303402          cubic=-23.03  pchip=-25.59  dQ=+1165.82
+  selected_303403          cubic=-22.80  pchip=-25.68  dQ=+1165.86
+--- ar/h265 r3d_18
+  calibrated_303401        cubic=+0.28  pchip=+3.95  dQ=-168.36
+  calibrated_303402        cubic=+8.57  pchip=+7.93  dQ=-267.45
+  calibrated_303403        cubic=+9.88  pchip=+9.60  dQ=-316.70
+  fixed                    cubic=+15.31  pchip=+14.40  dQ=-440.52
+  forced_303401            cubic=+15.13  pchip=+14.28  dQ=-424.94
+  forced_303402            cubic=+16.67  pchip=+15.73  dQ=-491.09
+  forced_303403            cubic=+10.47  pchip=+9.45  dQ=-302.77
+  selected_303401          cubic=+16.61  pchip=+15.72  dQ=-485.92
+  selected_303402          cubic=+14.79  pchip=+14.00  dQ=-425.96
+  selected_303403          cubic=+13.43  pchip=+12.63  dQ=-391.70
+--- od/h264 resnet50
+  calibrated_303401        cubic=-3.73  pchip=-3.63  dQ=+59.06
+  calibrated_303402        cubic=-7.38  pchip=-7.13  dQ=+106.69
+  calibrated_303403        cubic=-10.09  pchip=-9.29  dQ=+137.57
+  fixed                    cubic=-1.33  pchip=-0.98  dQ=+7.90
+  forced_303401            cubic=-4.98  pchip=-4.92  dQ=+75.88
+  forced_303402            cubic=-4.65  pchip=-4.50  dQ=+66.32
+  forced_303403            cubic=-4.81  pchip=-4.73  dQ=+78.40
+  selected_303401          cubic=-9.18  pchip=-9.38  dQ=+144.02
+  selected_303402          cubic=-8.51  pchip=-8.75  dQ=+135.48
+  selected_303403          cubic=-9.14  pchip=-9.35  dQ=+143.53
+--- od/h265 resnet50
+  calibrated_303401        cubic=-4.10  pchip=-3.73  dQ=+78.79
+  calibrated_303402        cubic=-5.04  pchip=-4.74  dQ=+100.15
+  calibrated_303403        cubic=-3.12  pchip=-2.58  dQ=+45.32
+  fixed                    cubic=-7.07  pchip=-6.69  dQ=+150.10
+  forced_303401            cubic=-7.28  pchip=-7.03  dQ=+143.69
+  forced_303402            cubic=-6.21  pchip=-5.90  dQ=+117.54
+  forced_303403            cubic=-8.86  pchip=-7.71  dQ=+135.51
+  selected_303401          cubic=-9.56  pchip=-9.26  dQ=+185.23
+  selected_303402          cubic=-10.36  pchip=-9.99  dQ=+196.94
+  selected_303403          cubic=-11.54  pchip=-10.85  dQ=+208.75
+selection_counts: {'anchor': (2048, 2048), 'calibrated_303401': (258, 2048), 'calibrated_303402': (126, 2048), 'calibrated_303403': (196, 2048), 'fixed': (0, 2048), 'forced_303401': (59, 2048), 'forced_303402': (75, 2048), 'forced_303403': (135, 2048), 'selected_303401': (171, 2048), 'selected_303402': (169, 2048), 'selected_303403': (169, 2048)}
+==== AR+OD dev
+--- ar/h264 swin3d_t
+  calibrated_303401        cubic=+41.70  pchip=+53.17  dQ=-554.26
+  calibrated_303402        cubic=+19.83  pchip=+41.10  dQ=-551.72
+  calibrated_303403        cubic=+21.98  pchip=+27.03  dQ=-303.64
+  fixed                    cubic=-4.80  pchip=+9.98  dQ=-322.44
+  forced_303401            cubic=+17.40  pchip=+32.85  dQ=-431.37
+  forced_303402            cubic=-9.05  pchip=+12.49  dQ=-361.85
+  forced_303403            cubic=+17.58  pchip=+41.85  dQ=-617.69
+  selected_303401          cubic=-0.96  pchip=+13.60  dQ=+107.47
+  selected_303402          cubic=-1.01  pchip=+13.52  dQ=+108.27
+  selected_303403          cubic=-1.02  pchip=+13.51  dQ=+108.40
+--- ar/h264 r3d_18
+  calibrated_303401        cubic=+175.90  pchip=+17.43  dQ=-876.66
+  calibrated_303402        cubic=+1192.54  pchip=+4.07  dQ=-723.22
+  calibrated_303403        cubic=+161.15  pchip=+42.91  dQ=-953.98
+  fixed                    cubic=+247.40  pchip=+46.31  dQ=-971.80
+  forced_303401            cubic=+202.68  pchip=+35.86  dQ=-863.96
+  forced_303402            cubic=+248.67  pchip=+46.85  dQ=-977.64
+  forced_303403            cubic=+1012.81  pchip=-5.30  dQ=-297.12
+  selected_303401          cubic=+102.66  pchip=-1.23  dQ=-298.57
+  selected_303402          cubic=+102.43  pchip=-1.40  dQ=-295.79
+  selected_303403          cubic=+102.39  pchip=-1.43  dQ=-295.25
+--- ar/h265 swin3d_t
+  calibrated_303401        cubic=-98.17  pchip=-3.03  dQ=+171.61
+  calibrated_303402        cubic=-66.83  pchip=+19.80  dQ=-459.18
+  calibrated_303403        cubic=-69.62  pchip=+1.24  dQ=-26.50
+  fixed                    cubic=-67.88  pchip=+2.37  dQ=-127.00
+  forced_303401            cubic=-72.56  pchip=-1.17  dQ=-89.67
+  forced_303402            cubic=-63.34  pchip=+12.35  dQ=-292.55
+  forced_303403            cubic=-66.59  pchip=+20.42  dQ=-672.50
+  selected_303401          cubic=-32.23  pchip=-18.79  dQ=+490.80
+  selected_303402          cubic=-32.17  pchip=-18.80  dQ=+493.01
+  selected_303403          cubic=-14.44  pchip=-17.05  dQ=+446.48
+--- ar/h265 r3d_18
+  calibrated_303401        cubic=-3.92  pchip=+6.70  dQ=-361.58
+  calibrated_303402        cubic=-3.52  pchip=-5.88  dQ=-255.33
+  calibrated_303403        cubic=-15.20  pchip=-4.03  dQ=-52.62
+  fixed                    cubic=-4.45  pchip=+3.37  dQ=-184.74
+  forced_303401            cubic=+4.48  pchip=+2.15  dQ=-135.74
+  forced_303402            cubic=-4.53  pchip=+3.24  dQ=-177.31
+  forced_303403            cubic=-11.91  pchip=+5.08  dQ=-327.99
+  selected_303401          cubic=-8.51  pchip=+1.12  dQ=-361.91
+  selected_303402          cubic=-8.60  pchip=+1.16  dQ=-361.51
+  selected_303403          cubic=-8.36  pchip=+1.17  dQ=-363.46
+--- od/h264 resnet50
+  calibrated_303401        cubic=-3.93  pchip=-11.89  dQ=+220.37
+  calibrated_303402        cubic=-0.11  pchip=-8.65  dQ=+163.86
+  calibrated_303403        cubic=-18.66  pchip=-13.65  dQ=+208.94
+  fixed                    cubic=+1.43  pchip=-6.55  dQ=+108.12
+  forced_303401            cubic=-0.46  pchip=-10.20  dQ=+201.24
+  forced_303402            cubic=+4.50  pchip=-8.81  dQ=+145.06
+  forced_303403            cubic=-3.27  pchip=-10.09  dQ=+196.45
+  selected_303401          cubic=+11.00  pchip=-2.73  dQ=+53.57
+  selected_303402          cubic=+11.00  pchip=-2.73  dQ=+53.57
+  selected_303403          cubic=+7.42  pchip=-4.85  dQ=+98.14
+--- od/h265 resnet50
+  calibrated_303401        cubic=-21.66  pchip=-1.88  dQ=+17.58
+  calibrated_303402        cubic=-5.10  pchip=-4.62  dQ=+108.78
+  calibrated_303403        cubic=-0.66  pchip=+3.71  dQ=-123.06
+  fixed                    cubic=+15.62  pchip=+11.61  dQ=-288.23
+  forced_303401            cubic=-3.14  pchip=-3.96  dQ=+97.73
+  forced_303402            cubic=-6.70  pchip=-2.54  dQ=+39.80
+  forced_303403            cubic=+1.07  pchip=-0.88  dQ=+10.03
+  selected_303401          cubic=+4.91  pchip=-2.50  dQ=+102.49
+  selected_303402          cubic=+4.96  pchip=-2.85  dQ=+108.32
+  selected_303403          cubic=+4.40  pchip=-2.33  dQ=+83.34
+selection_counts: {'anchor': (384, 384), 'calibrated_303401': (48, 384), 'calibrated_303402': (17, 384), 'calibrated_303403': (22, 384), 'fixed': (0, 384), 'forced_303401': (7, 384), 'forced_303402': (2, 384), 'forced_303403': (16, 384), 'selected_303401': (33, 384), 'selected_303402': (34, 384), 'selected_303403': (30, 384)}
+==== OT MOT20 test (HOTA)
+ anchor HOTA: [37.16, 37.51, 32.53, 28.57]
+  h264 calibrated_303401      cubic=N/A pchip=-12.24 dHOTA_pp=+1.09 HOTA=[37.47, 38.56, 33.34, 26.99]
+  h264 calibrated_303402      cubic=N/A pchip=-12.24 dHOTA_pp=+1.09 HOTA=[37.47, 38.56, 33.34, 26.99]
+  h264 calibrated_303403      cubic=N/A pchip=-0.54 dHOTA_pp=-0.20 HOTA=[39.29, 35.56, 32.76, 26.2]
+  h264 fixed                  cubic=N/A pchip=-12.24 dHOTA_pp=+1.09 HOTA=[37.47, 38.56, 33.34, 26.99]
+  h264 forced_303401          cubic=N/A pchip=-11.56 dHOTA_pp=+1.06 HOTA=[37.47, 38.56, 33.33, 27.45]
+  h264 forced_303402          cubic=N/A pchip=-11.21 dHOTA_pp=+0.86 HOTA=[37.47, 38.12, 33.34, 27.45]
+  h264 forced_303403          cubic=N/A pchip=-0.54 dHOTA_pp=-0.20 HOTA=[39.29, 35.56, 32.76, 26.2]
+  h264 selected_303401        cubic=N/A pchip=-27.07 dHOTA_pp=+1.98 HOTA=[39.78, 37.85, 35.76, 28.37]
+  h264 selected_303402        cubic=N/A pchip=-27.07 dHOTA_pp=+1.69 HOTA=[38.1, 37.85, 35.71, 28.07]
+  h264 selected_303403        cubic=N/A pchip=-27.07 dHOTA_pp=+1.98 HOTA=[39.78, 37.85, 35.76, 28.37]
+ anchor HOTA: [37.57, 35.25, 32.79, 24.73]
+  h265 calibrated_303401      cubic=+8.63 pchip=-5.81 dHOTA_pp=+0.74 HOTA=[38.43, 36.54, 31.65, 23.43]
+  h265 calibrated_303402      cubic=+1609.42 pchip=-5.23 dHOTA_pp=+0.47 HOTA=[36.75, 36.54, 31.87, 22.05]
+  h265 calibrated_303403      cubic=+490.64 pchip=-4.80 dHOTA_pp=+0.52 HOTA=[36.75, 36.54, 31.65, 23.43]
+  h265 fixed                  cubic=+490.64 pchip=-4.80 dHOTA_pp=+0.52 HOTA=[36.75, 36.54, 31.65, 23.43]
+  h265 forced_303401          cubic=-15.23 pchip=-3.39 dHOTA_pp=+0.24 HOTA=[38.43, 35.17, 32.52, 20.69]
+  h265 forced_303402          cubic=-15.23 pchip=-3.39 dHOTA_pp=+0.24 HOTA=[38.43, 35.17, 32.52, 20.69]
+  h265 forced_303403          cubic=-15.23 pchip=-3.39 dHOTA_pp=+0.24 HOTA=[38.43, 35.17, 32.52, 20.69]
+  h265 selected_303401        cubic=N/A pchip=-14.07 dHOTA_pp=+0.03 HOTA=[37.7, 33.23, 33.98, 23.84]
+  h265 selected_303402        cubic=N/A pchip=-14.07 dHOTA_pp=+0.03 HOTA=[37.7, 33.23, 33.98, 23.84]
+  h265 selected_303403        cubic=N/A pchip=-14.07 dHOTA_pp=+0.03 HOTA=[37.7, 33.23, 33.98, 23.84]
+==== OT MOT20 dev (HOTA)
+ anchor HOTA: [45.92, 43.39, 39.82, 33.79]
+  h264 calibrated_303401      cubic=+3.83 pchip=+3.00 dHOTA_pp=-0.46 HOTA=[44.19, 42.34, 39.62, 32.96]
+  h264 calibrated_303402      cubic=+4.39 pchip=-9.21 dHOTA_pp=+0.55 HOTA=[44.91, 43.81, 40.66, 34.46]
+  h264 calibrated_303403      cubic=+29.35 pchip=-11.45 dHOTA_pp=+0.43 HOTA=[43.95, 43.33, 40.71, 35.03]
+  h264 fixed                  cubic=+3.83 pchip=+3.00 dHOTA_pp=-0.46 HOTA=[44.19, 42.34, 39.62, 32.96]
+  h264 forced_303401          cubic=-4.94 pchip=-5.94 dHOTA_pp=+0.12 HOTA=[44.19, 42.72, 40.66, 34.46]
+  h264 forced_303402          cubic=+4.39 pchip=-9.21 dHOTA_pp=+0.55 HOTA=[44.91, 43.81, 40.66, 34.46]
+  h264 forced_303403          cubic=+29.35 pchip=-11.45 dHOTA_pp=+0.43 HOTA=[43.95, 43.33, 40.71, 35.03]
+  h264 selected_303401        cubic=-18.26 pchip=-7.29 dHOTA_pp=+0.36 HOTA=[45.13, 42.81, 40.9, 34.16]
+  h264 selected_303402        cubic=-16.90 pchip=-8.22 dHOTA_pp=+0.45 HOTA=[45.3, 42.84, 40.9, 34.7]
+  h264 selected_303403        cubic=-18.26 pchip=-7.29 dHOTA_pp=+0.36 HOTA=[45.13, 42.81, 40.9, 34.16]
+ anchor HOTA: [45.23, 41.45, 37.63, 27.84]
+  h265 calibrated_303401      cubic=+18.47 pchip=-5.92 dHOTA_pp=+0.72 HOTA=[44.51, 42.75, 37.3, 26.83]
+  h265 calibrated_303402      cubic=+27.66 pchip=-5.28 dHOTA_pp=+0.59 HOTA=[43.99, 42.47, 37.37, 26.83]
+  h265 calibrated_303403      cubic=+27.66 pchip=-5.28 dHOTA_pp=+0.59 HOTA=[43.99, 42.47, 37.37, 26.83]
+  h265 fixed                  cubic=+27.66 pchip=-5.28 dHOTA_pp=+0.59 HOTA=[43.99, 42.47, 37.37, 26.83]
+  h265 forced_303401          cubic=-9.04 pchip=-4.31 dHOTA_pp=+0.37 HOTA=[44.51, 41.5, 38.18, 26.74]
+  h265 forced_303402          cubic=-12.54 pchip=-5.83 dHOTA_pp=+0.51 HOTA=[44.51, 41.5, 38.36, 27.12]
+  h265 forced_303403          cubic=-9.04 pchip=-4.31 dHOTA_pp=+0.37 HOTA=[44.51, 41.5, 38.18, 26.74]
+  h265 selected_303401        cubic=+5.47 pchip=-9.67 dHOTA_pp=+0.92 HOTA=[44.29, 42.33, 38.31, 28.44]
+  h265 selected_303402        cubic=+5.47 pchip=-9.67 dHOTA_pp=+0.92 HOTA=[44.29, 42.33, 38.31, 28.44]
+  h265 selected_303403        cubic=+5.47 pchip=-9.67 dHOTA_pp=+0.92 HOTA=[44.29, 42.33, 38.31, 28.44]

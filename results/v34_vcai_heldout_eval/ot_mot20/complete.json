@@ -1,0 +1,12 @@
+{
+  "status": "complete",
+  "experiment": "ar_ot",
+  "stage": "baseline",
+  "cache_sha256": "eed5ea6b05ce26c33742450e7070d81b983bdfbf57eef3b9ff64f8b6d0dfd42a",
+  "checkpoint_sha256": [
+    "71b88f63520d5302f1c442a8343eb19634081f46867d846f8735f6fc5c283656",
+    "09be486361f721dcb437197cfe670d23541634c7d6e01ba3e6455bb6fd01dfbd",
+    "d07df72ae91eb3df0b9435fdf856d2d37240242637f863ca65f1c9456e13fb68"
+  ],
+  "scope": "dedicated MOT20 OT pass: MOT20-02 windows train/cal, MOT20-03 dev, MOT20-01 test; HOTA via pinned TrackEval"
+}
